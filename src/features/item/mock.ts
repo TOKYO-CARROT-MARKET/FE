@@ -1,0 +1,55 @@
+import type { Item } from "./types";
+
+export const mockItems: Item[] = [
+  {
+    id: 1,
+    title: "전자레인지 팝니다",
+    price: 3000,
+    category: "가전",
+    region: "신주쿠",
+    description: "귀국 때문에 급하게 정리합니다. 상태 좋아요.",
+    images: [
+      "https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?q=80&w=1200&auto=format&fit=crop",
+    ],
+    pickup_type: "pickup",
+    available_from: "2026-04-02",
+    departure_date: "2026-04-10",
+    status: "selling",
+    created_at: "2026-03-30",
+    updated_at: "2026-03-30",
+  },
+  {
+    id: 2,
+    title: "책상 + 의자 세트",
+    price: 5000,
+    category: "가구",
+    region: "다카다노바바",
+    description: "유학 시작하시는 분이 가져가시면 좋을 것 같아요.",
+    images: [
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
+    ],
+    pickup_type: "both",
+    available_from: "2026-04-01",
+    departure_date: "2026-04-15",
+    status: "reserved",
+    created_at: "2026-03-29",
+    updated_at: "2026-03-30",
+  },
+  {
+    id: 3,
+    title: "밥솥 + 전기포트 묶음",
+    price: 2500,
+    category: "주방",
+    region: "오쿠보",
+    description: "혼자 사는 분 스타터팩 느낌으로 가져가세요.",
+    images: [
+      "https://images.unsplash.com/photo-1585515656893-6b4d6d6d7d13?q=80&w=1200&auto=format&fit=crop",
+    ],
+    pickup_type: "pickup",
+    available_from: "2026-04-05",
+    departure_date: "2026-04-20",
+    status: "sold",
+    created_at: "2026-03-28",
+    updated_at: "2026-03-30",
+  },
+];
