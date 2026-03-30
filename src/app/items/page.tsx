@@ -1,8 +1,12 @@
 import ItemCard from "@/components/item/ItemCard";
 import { getItems } from "@/features/item/api";
+import { Item } from "@/features/item/types";
 
 export default async function ItemsPage() {
-  const items = await getItems();
+  let items: Item[] = [];
+  try {
+    items = await getItems();
+  } catch (e) {}
 
   return (
     <section className="space-y-8">

@@ -1,9 +1,13 @@
 import Link from "next/link";
 import ItemCard from "@/components/item/ItemCard";
 import { getItems } from "@/features/item/api";
+import { Item } from "@/features/item/types";
 
 export default async function HomePage() {
-  const items = await getItems();
+  let items: Item[] = [];
+  try {
+    items = await getItems();
+  } catch (e) {}
   return (
     <div className="space-y-16">
       <section className="grid gap-8 rounded-4xl bg-white p-8 shadow-sm ring-1 ring-black/5 lg:grid-cols-2 lg:p-12">
