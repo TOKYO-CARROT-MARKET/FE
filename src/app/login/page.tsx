@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getGoogleOAuthStartUrl } from "@/features/auth/api";
 
-export default function LoginPage() {
+function LoginContent() {
   const searchParams = useSearchParams();
   const [isRedirecting, setIsRedirecting] = useState(false);
 
@@ -43,5 +43,13 @@ export default function LoginPage() {
         </p>
       </div>
     </section>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-sm text-neutral-500">로딩 중...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
