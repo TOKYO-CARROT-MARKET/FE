@@ -3,47 +3,12 @@ import type { Item } from "@/features/item/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
-export async function signup(input: {
-  email: string;
-  password: string;
-  password_confirmation: string;
-}): Promise<AuthUser> {
-  const res = await fetch(`${API_URL}/api/v1/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify({ user: input }),
-  });
+export function getGoogleOAuthStartUrl(redirectPath?: string) {
+  const query = redirectPath
+    ? `?redirect_path=${encodeURIComponent(redirectPath)}`
+    : "";
 
-  if (!res.ok) {
-    const errorData = await res.json().catch(() => null);
-    throw new Error(errorData?.errors?.join(", ") || "회원가입 실패");
-  }
-
-  return res.json();
-}
-
-export async function login(input: {
-  email: string;
-  password: string;
-}): Promise<AuthUser> {
-  const res = await fetch(`${API_URL}/api/v1/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(input),
-  });
-
-  if (!res.ok) {
-    const errorData = await res.json().catch(() => null);
-    throw new Error(errorData?.error || "로그인 실패");
-  }
-
-  return res.json();
+  return `${API_URL}/auth/google${query}`;
 }
 
 export async function getMe(): Promise<AuthUser> {
