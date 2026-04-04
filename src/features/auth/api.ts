@@ -1,5 +1,8 @@
 import type { AuthUser } from "./types";
 import type { Item } from "@/features/item/types";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { removeRefreshToken } from "@/lib/token";
+import { useAuthStore } from "./store";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
@@ -12,8 +15,7 @@ export function getGoogleOAuthStartUrl(redirectPath?: string) {
 }
 
 export async function getMe(): Promise<AuthUser> {
-  const res = await fetch(`${API_URL}/api/v1/me`, {
-    credentials: "include",
+  const res = await fetchWithAuth(`${API_URL}/api/v1/me`, {
     cache: "no-store",
   });
 
@@ -25,19 +27,12 @@ export async function getMe(): Promise<AuthUser> {
 }
 
 export async function logout(): Promise<void> {
-  const res = await fetch(`${API_URL}/api/v1/logout`, {
-    method: "DELETE",
-    credentials: "include",
-  });
-
-  if (!res.ok) {
-    throw new Error("로그아웃 실패");
-  }
+  removeRefreshToken();
+  useAuthStore.getState().clearUser();
 }
 
 export async function getMyItems(): Promise<Item[]> {
-  const res = await fetch(`${API_URL}/api/v1/my/items`, {
-    credentials: "include",
+  const res = await fetchWithAuth(`${API_URL}/api/v1/my/items`, {
     cache: "no-store",
   });
 

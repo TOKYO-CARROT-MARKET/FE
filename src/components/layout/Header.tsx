@@ -16,15 +16,11 @@ export default function Header() {
   const user = useAuthStore((state) => state.user);
   const clearUser = useAuthStore((state) => state.clearUser);
 
-  async function handleLogout() {
-    try {
-      await logout();
-      clearUser();
-      router.push("/");
-      router.refresh();
-    } catch (error) {
-      console.error(error);
-    }
+  function handleLogout() {
+    logout();
+    clearUser();
+    router.push("/");
+    router.refresh();
   }
 
   return (

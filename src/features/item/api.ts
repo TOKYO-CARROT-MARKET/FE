@@ -1,4 +1,5 @@
 import type { Item } from "./types";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -21,9 +22,8 @@ type CreateItemInput = {
 export async function getItems(): Promise<Item[]> {
   const res = await fetch(`${API_URL}/api/v1/items`, {
     cache: "no-store",
-    credentials: "include",
   });
-  console.log(res);
+
   if (!res.ok) {
     throw new Error("매물 목록 조회 실패");
   }
@@ -34,7 +34,6 @@ export async function getItems(): Promise<Item[]> {
 export async function getItem(id: string | number): Promise<Item> {
   const res = await fetch(`${API_URL}/api/v1/items/${id}`, {
     cache: "no-store",
-    credentials: "include",
   });
 
   if (!res.ok) {
@@ -45,15 +44,10 @@ export async function getItem(id: string | number): Promise<Item> {
 }
 
 export async function createItem(input: CreateItemInput): Promise<Item> {
-  const res = await fetch(`${API_URL}/api/v1/items`, {
+  const res = await fetchWithAuth(`${API_URL}/api/v1/items`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify({
-      item: input,
-    }),
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ item: input }),
   });
 
   if (!res.ok) {
