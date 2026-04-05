@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Item, ItemStatus } from "@/features/item/types";
+import CountDown from "@/components/common/CountDown";
+import Image from "next/image";
 
 interface ItemCardProps {
   item: Item;
@@ -28,19 +30,29 @@ const pickupTypeLabel: Record<Item["pickup_type"], string> = {
 
 export default function ItemCard({ item }: ItemCardProps) {
   const status = statusMap[item.status];
-  const imageUrl = item.images?.[0] || "/placeholder-item.png";
+  const imageUrl = item.images?.[0];
 
   return (
     <Link
       href={`/items/${item.id}`}
-      className="group block overflow-hidden rounded-3xl border border-black/5 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+      className="group block overflow-hidden rounded-3xl  transition hover:-translate-y-1 hover:shadow-md"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
-        <img
-          src={imageUrl}
-          alt={item.title}
-          className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
-        />
+      <div className="relative aspect-square overflow-hidden bg-neutral-100">
+        {item.images.length > 0 ? (
+          <img
+            src={imageUrl}
+            alt={item.title}
+            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <Image
+            src={"/default.png"}
+            fill
+            alt="item_img"
+            className="grayscale "
+          />
+        )}
+
         <div
           className={`absolute left-4 top-4 rounded-full border px-3 py-1 text-xs font-semibold ${status.className}`}
         >
@@ -48,8 +60,11 @@ export default function ItemCard({ item }: ItemCardProps) {
         </div>
       </div>
 
-      <div className="space-y-4 p-5">
-        <h3 className="text-lg font-bold">{item.title}</h3>
+      <div className=" px-5 pb-1 ">
+        {item.departure_date && <CountDown date={item.departure_date} />}
+        <p className="text-lg font-bold overflow-hidden text-ellipsis">
+          {item.title}
+        </p>
         <p>{item.price.toLocaleString("ko-KR")}엔</p>
         <p className="text-sm text-neutral-500">{item.region}</p>
       </div>

@@ -7,7 +7,7 @@ type PageProps = {
 export default async function ItemDetailPage({ params }: PageProps) {
   const { id } = await params;
   const item = await getItem(id);
-  const imageUrl = item.images?.[0] || "/placeholder-item.png";
+  const imageUrl = item.images?.[1] || "/placeholder-item.png";
   return (
     <section className="mx-auto max-w-3xl space-y-8">
       <div className="overflow-hidden rounded-[2rem] border border-black/5 bg-white shadow-sm">

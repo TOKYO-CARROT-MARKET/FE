@@ -28,7 +28,7 @@ export default async function ItemsPage() {
           아직 등록된 매물이 없어요.
         </div>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {items.map((item) => (
             <ItemCard key={item.id} item={item} />
           ))}

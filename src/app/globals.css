@@ -14,3 +14,14 @@ body {
   background: #fcfcfd;
   color: #171717;
 }
+
+@keyframes countdown-tick {
+  0% {
+    opacity: 0.4;
+    transform: translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

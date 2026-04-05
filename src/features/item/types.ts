@@ -7,7 +7,7 @@ export interface Item {
   price: number;
   category: string;
   region: string;
-  images?: string[];
+  images: string[];
   pickup_type: "pickup" | "delivery" | "both";
   available_from?: string;
   departure_date?: string;

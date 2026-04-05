@@ -17,6 +17,7 @@ type CreateItemInput = {
   available_from?: string;
   departure_date?: string;
   status: "selling" | "reserved" | "sold";
+  images?: string[];
 };
 
 export async function getItems(): Promise<Item[]> {
