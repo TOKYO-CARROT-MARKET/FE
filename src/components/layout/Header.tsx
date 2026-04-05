@@ -33,7 +33,7 @@ export default function Header() {
           <div className="leading-tight">
             <p className="text-base font-bold text-neutral-900">귀국짐</p>
             <p className="text-xs text-neutral-500">
-              일본 거주 한국인 귀국짐 거래
+              도쿄 거주 한국인 귀국짐 거래
             </p>
           </div>
         </Link>
@@ -53,12 +53,12 @@ export default function Header() {
         <div className="flex items-center gap-2">
           {user ? (
             <>
-              <span className="hidden text-sm text-neutral-600 sm:inline">
+              <div className="hidden text-sm text-neutral-600 sm:inline">
                 {user.email}
-              </span>
+              </div>
               <button
                 onClick={handleLogout}
-                className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50"
+                className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 text-nowrap transition hover:bg-neutral-50 "
               >
                 로그아웃
               </button>
@@ -66,18 +66,18 @@ export default function Header() {
           ) : (
             <Link
               href="/login"
-              className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50"
+              className="rounded-full border border-neutral-200 px-4 py-2 text-sm font-medium text-neutral-700 text-nowrap transition hover:bg-neutral-50"
             >
               로그인
             </Link>
           )}
 
-          <Link
+          {/* <Link
             href="/sell"
-            className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+            className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-semibold text-white text-nowrap transition hover:opacity-90"
           >
             등록하기
-          </Link>
+          </Link> */}
         </div>
       </div>
     </header>

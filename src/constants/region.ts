@@ -22,7 +22,6 @@ export const TOKYO_WARDS = [
   "아다치구",
   "가쓰시카구",
   "에도가와구",
-  "직접 입력",
 ] as const;
 
 export type TokyoWard = (typeof TOKYO_WARDS)[number];

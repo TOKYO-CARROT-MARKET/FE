@@ -1,4 +1,4 @@
-import type { Item } from "./types";
+import type { Item, ItemFilter } from "./types";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -20,8 +20,21 @@ type CreateItemInput = {
   images?: string[];
 };
 
-export async function getItems(): Promise<Item[]> {
-  const res = await fetch(`${API_URL}/api/v1/items`, {
+export async function getItems(filter?: ItemFilter): Promise<Item[]> {
+  const params = new URLSearchParams();
+  params.set("limit", String(filter?.limit ?? 20));
+  params.set("offset", String(filter?.offset ?? 0));
+  if (filter?.q) params.set("q", filter.q);
+  if (filter?.region) params.set("region", filter.region);
+  if (filter?.category) params.set("category", filter.category);
+  if (filter?.status) params.set("status", filter.status);
+  if (filter?.priceMin !== undefined)
+    params.set("price_min", String(filter.priceMin));
+  if (filter?.priceMax !== undefined)
+    params.set("price_max", String(filter.priceMax));
+  if (filter?.availableDate) params.set("available_date", filter.availableDate);
+
+  const res = await fetch(`${API_URL}/api/v1/items?${params.toString()}`, {
     cache: "no-store",
   });
 

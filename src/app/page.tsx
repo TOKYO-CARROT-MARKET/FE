@@ -2,6 +2,7 @@ import Link from "next/link";
 import ItemCard from "@/components/item/ItemCard";
 import { getItems } from "@/features/item/api";
 import { Item } from "@/features/item/types";
+import ItemsList from "@/components/item/ItemList";
 
 export default async function HomePage() {
   let items: Item[] = [];
@@ -103,11 +104,7 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
-            <ItemCard key={item.id} item={item} />
-          ))}
-        </div>
+        <ItemsList items={items} />
       </section>
     </div>
   );

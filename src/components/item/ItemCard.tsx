@@ -1,10 +1,11 @@
 import Link from "next/link";
 import type { Item, ItemStatus } from "@/features/item/types";
-import CountDown from "@/components/common/CountDown";
-import Image from "next/image";
+import CountDown from "@/components/item/CountDown";
+import ItemImage from "@/components/item/ItemImage";
 
 interface ItemCardProps {
   item: Item;
+  displayRow?: boolean;
 }
 
 const statusMap: Record<ItemStatus, { label: string; className: string }> = {
@@ -28,30 +29,55 @@ const pickupTypeLabel: Record<Item["pickup_type"], string> = {
   both: "직접 수령 / 배송",
 };
 
-export default function ItemCard({ item }: ItemCardProps) {
-  const status = statusMap[item.status];
-  const imageUrl = item.images?.[0];
-
+function RowCard({
+  item,
+  status,
+}: {
+  item: Item;
+  status: { label: string; className: string };
+}) {
   return (
     <Link
       href={`/items/${item.id}`}
-      className="group block overflow-hidden rounded-3xl  transition hover:-translate-y-1 hover:shadow-md"
+      className="w-full group flex flex-row transition hover:-translate-y-1 hover:shadow-md divider"
     >
-      <div className="relative aspect-square overflow-hidden bg-neutral-100">
-        {item.images.length > 0 ? (
-          <img
-            src={imageUrl}
-            alt={item.title}
-            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
-          />
-        ) : (
-          <Image
-            src={"/default.png"}
-            fill
-            alt="item_img"
-            className="grayscale "
-          />
-        )}
+      <div className="w-32 min-w-32 rounded-3xl overflow-hidden relative aspect-square bg-neutral-100">
+        <ItemImage image_url={item.images?.[0]} title={item.title} />
+
+        <div
+          className={`absolute left-2 top-2 rounded-full border px-2  text-xs font-semibold ${status.className}`}
+        >
+          {status.label}
+        </div>
+      </div>
+
+      <div className="flex flex-col justify-between w-full px-4 py-2 overflow-hidden ">
+        <div className="flex flex-col">
+          <p className="text-lg font-bold text-nowrap overflow-hidden text-ellipsis ">
+            {item.title}
+          </p>
+          <p>{item.price.toLocaleString("ko-KR")}엔</p>
+          <p className="text-sm text-neutral-500">{item.region}</p>
+        </div>
+        {item.departure_date && <CountDown date={item.departure_date} />}
+      </div>
+    </Link>
+  );
+}
+function ColumnCard({
+  item,
+  status,
+}: {
+  item: Item;
+  status: { label: string; className: string };
+}) {
+  return (
+    <Link
+      href={`/items/${item.id}`}
+      className="w-full group flex flex-row overflow-hidden rounded-3xl  transition hover:-translate-y-1 hover:shadow-md"
+    >
+      <div className="w-80 relative aspect-square overflow-hidden bg-neutral-100">
+        <ItemImage image_url={item.images?.[0]} title={item.title} />
 
         <div
           className={`absolute left-4 top-4 rounded-full border px-3 py-1 text-xs font-semibold ${status.className}`}
@@ -69,5 +95,14 @@ export default function ItemCard({ item }: ItemCardProps) {
         <p className="text-sm text-neutral-500">{item.region}</p>
       </div>
     </Link>
+  );
+}
+export default function ItemCard({ item, displayRow = true }: ItemCardProps) {
+  const status = statusMap[item.status];
+
+  return displayRow ? (
+    <RowCard item={item} status={status} />
+  ) : (
+    <ColumnCard item={item} status={status} />
   );
 }

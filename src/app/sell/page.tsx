@@ -215,7 +215,7 @@ export default function SellPage() {
             <option value="" disabled>
               지역 선택
             </option>
-            {TOKYO_WARDS.map((ward) => (
+            {[...TOKYO_WARDS, "직접 입력"].map((ward) => (
               <option key={ward} value={ward}>
                 {ward}
               </option>
